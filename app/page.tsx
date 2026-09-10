@@ -14,7 +14,7 @@ export default function Page() {
           <EmptyMedia>
             <img alt="Logo" height={48} src="/logo.svg" width={48} />
           </EmptyMedia>
-          <EmptyTitle>What should we build today?</EmptyTitle>
+          <EmptyTitle className="text-2xl">What should we build today?</EmptyTitle>
           <EmptyDescription>
             Build your own racers, shooters, puzzles and whole worlds using
             your own words. If you can describe it, you can play it.
