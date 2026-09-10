@@ -5,10 +5,14 @@ import {
   EmptyMedia,
   EmptyTitle,
 } from "@/components/ui/empty"
+import { UserButton } from "@clerk/nextjs"
+import { auth } from "@clerk/nextjs/server"
 
-export default function Page() {
+export default async function Page() {
+  await auth.protect({ unauthenticatedUrl: "/sign-in"})
+
   return (
-    <div className="flex min-h-svh">
+    <div className="relative flex min-h-svh">
       <Empty>
         <EmptyHeader>
           <EmptyMedia>
@@ -21,6 +25,9 @@ export default function Page() {
           </EmptyDescription>
         </EmptyHeader>
       </Empty>
+      <div className="absolute top-4 right-4">
+        <UserButton />
+      </div>
     </div>
   )
 }
