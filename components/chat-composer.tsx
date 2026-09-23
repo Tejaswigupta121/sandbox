@@ -27,6 +27,8 @@ import {
   InputGroupTextarea,
 } from "@/components/ui/input-group"
 
+import { createGame } from "@/lib/games/actions"
+
 const suggestions = [
   { label: "Voxel survival", icon: PickaxeIcon },
   { label: "Ink samurai duel", icon: SwordsIcon },
@@ -40,39 +42,43 @@ const suggestions = [
 export function ChatComposer() {
   return (
     <>
-      <InputGroup className="bg-popover">
-        <InputGroupTextarea
-          aria-label="Message"
-          placeholder="Describe the game you want to build..."
-          rows={3}
-          className="field-sizing-content max-h-48 min-h-10"
-        />
-        <InputGroupAddon align="block-end">
-          <DropdownMenu>
-            <DropdownMenuTrigger
-              render={
-                <InputGroupButton variant="ghost">
-                  <GripIcon />
-                  Kimi K3
-                  <ChevronDownIcon />
-                </InputGroupButton>
-              }
-            />
-            <DropdownMenuContent>
-              <DropdownMenuItem>Kimi K3</DropdownMenuItem>
-              <DropdownMenuItem>Kimi K2</DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
-          <InputGroupButton
-            aria-label="Send"
-            className="ml-auto rounded-full"
-            size="icon-sm"
-            variant="default"
-          >
-            <ArrowUpIcon />
-          </InputGroupButton>
-        </InputGroupAddon>
-      </InputGroup>
+      <form action={createGame} className="w-full">
+        <InputGroup className="bg-popover">
+          <InputGroupTextarea
+            aria-label="Message"
+            name="title"
+            placeholder="Describe the game you want to build..."
+            rows={3}
+            className="field-sizing-content max-h-48 min-h-10"
+          />
+          <InputGroupAddon align="block-end">
+            <DropdownMenu>
+              <DropdownMenuTrigger
+                render={
+                  <InputGroupButton variant="ghost">
+                    <GripIcon />
+                    Kimi K3
+                    <ChevronDownIcon />
+                  </InputGroupButton>
+                }
+              />
+              <DropdownMenuContent>
+                <DropdownMenuItem>Kimi K3</DropdownMenuItem>
+                <DropdownMenuItem>Kimi K2</DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+            <InputGroupButton
+              aria-label="Send"
+              className="ml-auto rounded-full"
+              size="icon-sm"
+              type="submit"
+              variant="default"
+            >
+              <ArrowUpIcon />
+            </InputGroupButton>
+          </InputGroupAddon>
+        </InputGroup>
+      </form>
       <div className="flex flex-wrap justify-center gap-2">
         {suggestions.map(({ label, icon: Icon }) => (
           <Button key={label} className="rounded-full font-normal text-muted-foreground" size="sm" variant="outline">

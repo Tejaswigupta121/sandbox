@@ -7,6 +7,7 @@ import { usePathname } from "next/navigation"
 import { CircleDollarSign, MessageSquareIcon, SquarePen } from "lucide-react"
 
 import { Empty, EmptyDescription } from "@/components/ui/empty"
+import type { Game } from "@/lib/games/queries"
 import {
   Sidebar,
   SidebarContent,
@@ -22,7 +23,7 @@ import {
   SidebarTrigger,
 } from "@/components/ui/sidebar"
 
-export function AppSidebar() {
+export function AppSidebar({ games }: { games: Game[] }) {
   const pathname = usePathname()
 
   return (
@@ -63,18 +64,33 @@ export function AppSidebar() {
         <SidebarGroup>
           <SidebarGroupLabel>Recents</SidebarGroupLabel>
           <SidebarGroupContent>
-            <Empty className="border p-2 group-data-[collapsible=icon]:hidden">
-              <EmptyDescription className="text-xs">
-                Your games will live here.
-              </EmptyDescription>
-            </Empty>
-            <SidebarMenu className="hidden group-data-[collapsible=icon]:block">
-              <SidebarMenuItem>
-                <SidebarMenuButton>
-                  <MessageSquareIcon />
-                </SidebarMenuButton>
-              </SidebarMenuItem>
-            </SidebarMenu>
+            {games.length > 0 ? (
+              <SidebarMenu>
+                {games.map((game) => (
+                  <SidebarMenuItem key={game.id}>
+                    <SidebarMenuButton>
+                      <MessageSquareIcon />
+                      <span>{game.title}</span>
+                    </SidebarMenuButton>
+                  </SidebarMenuItem>
+                ))}
+              </SidebarMenu>
+            ) : (
+              <div>
+                <Empty className="border p-2 group-data-[collapsible=icon]:hidden">
+                  <EmptyDescription className="text-xs">
+                    Your games will live here.
+                  </EmptyDescription>
+                </Empty>
+                <SidebarMenu className="hidden group-data-[collapsible=icon]:block">
+                  <SidebarMenuItem>
+                    <SidebarMenuButton>
+                      <MessageSquareIcon />
+                    </SidebarMenuButton>
+                  </SidebarMenuItem>
+                </SidebarMenu>
+              </div>
+            )}
           </SidebarGroupContent>
         </SidebarGroup>
       </SidebarContent>
