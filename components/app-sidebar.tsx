@@ -4,7 +4,7 @@ import { OrganizationSwitcher, UserButton } from "@clerk/nextjs"
 import Image from "next/image"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { CircleDollarSign, SquarePen } from "lucide-react"
+import { CircleDollarSign, MessageSquareIcon, SquarePen } from "lucide-react"
 
 import { Empty, EmptyDescription } from "@/components/ui/empty"
 import {
@@ -26,17 +26,19 @@ export function AppSidebar() {
   const pathname = usePathname()
 
   return (
-    <Sidebar>
+    <Sidebar collapsible="icon">
       <SidebarHeader>
         <div className="flex items-center gap-2">
-          <Image
-            src="/logo.svg"
-            alt="Sandbox"
-            width={20}
-            height={20}
-            className="size-5"
-          />
-          <span className="font-logo text-base">Sandbox</span>
+          <div className="flex items-center gap-2 group-data-[collapsible=icon]:hidden">
+            <Image
+              src="/logo.svg"
+              alt="Sandbox"
+              width={20}
+              height={20}
+              className="size-5"
+            />
+            <span className="font-logo text-base">Sandbox</span>
+          </div>
           <SidebarTrigger className="ml-auto" />
         </div>
       </SidebarHeader>
@@ -61,11 +63,18 @@ export function AppSidebar() {
         <SidebarGroup>
           <SidebarGroupLabel>Recents</SidebarGroupLabel>
           <SidebarGroupContent>
-            <Empty className="border p-2">
+            <Empty className="border p-2 group-data-[collapsible=icon]:hidden">
               <EmptyDescription className="text-xs">
                 Your games will live here.
               </EmptyDescription>
             </Empty>
+            <SidebarMenu className="hidden group-data-[collapsible=icon]:block">
+              <SidebarMenuItem>
+                <SidebarMenuButton>
+                  <MessageSquareIcon />
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+            </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>
       </SidebarContent>
@@ -81,16 +90,18 @@ export function AppSidebar() {
           </SidebarMenuItem>
         </SidebarMenu>
         <div className="flex items-center justify-between gap-2 px-2">
-          <OrganizationSwitcher
-            appearance={{
-              elements:{
-                rootBox: "w-full! max-w-full",
-                organizationPreview: "min-w-0",
-                organizationPreviewTextContainer: "min-w-0",
-                organizationPreviewMainIdentifier: "truncate",
-              },
-            }}
-             />
+          <div className="w-full min-w-0 group-data-[collapsible=icon]:hidden">
+            <OrganizationSwitcher
+              appearance={{
+                elements:{
+                  rootBox: "w-full! max-w-full",
+                  organizationPreview: "min-w-0",
+                  organizationPreviewTextContainer: "min-w-0",
+                  organizationPreviewMainIdentifier: "truncate",
+                },
+              }}
+               />
+          </div>
           <UserButton />
         </div>
       </SidebarFooter>
