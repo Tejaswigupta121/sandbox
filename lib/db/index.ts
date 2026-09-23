@@ -3,6 +3,17 @@ import { drizzle } from "drizzle-orm/neon-http"
 
 import * as schema from "@/lib/db/schema"
 
-const sql = neon(process.env.DATABASE_URL!)
+let cached: ReturnType<typeof createDb> | undefined
 
-export const db = drizzle({ client: sql, schema })
+function createDb() {
+  const url = process.env.DATABASE_URL
+  if (!url) {
+    throw new Error("DATABASE_URL is not set")
+  }
+  return drizzle({ client: neon(url), schema })
+}
+
+export function getDb() {
+  cached ??= createDb()
+  return cached
+}

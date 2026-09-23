@@ -1,7 +1,7 @@
 import { auth } from "@clerk/nextjs/server"
 import { desc, eq } from "drizzle-orm"
 
-import { db } from "@/lib/db"
+import { getDb } from "@/lib/db"
 import { games } from "@/lib/db/schema"
 
 export type Game = typeof games.$inferSelect
@@ -12,7 +12,7 @@ export async function listGames(): Promise<Game[]> {
     return []
   }
 
-  return db
+  return getDb()
     .select()
     .from(games)
     .where(eq(games.orgId, orgId))

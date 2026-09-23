@@ -3,7 +3,7 @@
 import { auth } from "@clerk/nextjs/server"
 import { revalidatePath } from "next/cache"
 
-import { db } from "@/lib/db"
+import { getDb } from "@/lib/db"
 import { games } from "@/lib/db/schema"
 
 export async function createGame(formData: FormData) {
@@ -17,7 +17,7 @@ export async function createGame(formData: FormData) {
     return
   }
 
-  await db.insert(games).values({ orgId, title })
+  await getDb().insert(games).values({ orgId, title })
 
   revalidatePath("/")
 }
